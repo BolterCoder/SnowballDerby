@@ -202,7 +202,7 @@ export function HomePage() {
                   <span>{beat.eyebrow}</span>
                   <span>History</span>
                 </div>
-                <img alt={beat.alt} className="archive-preview-image" src={beat.image} />
+                <img alt={beat.alt} className="archive-preview-image" onClick={() => openLightbox([{ src: beat.image, alt: beat.alt, title: beat.title }])} style={{ cursor: 'zoom-in' }} src={beat.image} />
                 <h3>{beat.title}</h3>
                 <p>{beat.description}</p>
               </article>
@@ -335,6 +335,8 @@ export function HomePage() {
                   <img
                     alt={`${race.winner} ${race.year}`}
                     className="archive-preview-image"
+                    onClick={() => openLightbox([{ src: `/${race.image!.replace(/^images\//, 'images/')}`, alt: `${race.winner} ${race.year}`, title: `${race.year} Snowball Derby` }])}
+                    style={{ cursor: 'zoom-in' }}
                     src={`/${race.image.replace(/^images\//, 'images/')}`}
                   />
                 ) : null}

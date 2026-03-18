@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useLightbox } from '../components/Lightbox';
 import { raceData } from '../data/races';
 import { getDriverPath } from '../lib/drivers';
 import { formatRaceDate, getRaceEra, getRaceExcerpt, getRacePoleDisplay, matchesRaceQuery, sortRacesDescending } from '../lib/races';
@@ -15,6 +16,7 @@ const eras = [
 const femaleWinners = new Set(['Tammy Jo Kirk', 'Johanna Long']);
 
 export function RacesPage() {
+  const { open: openLightbox } = useLightbox();
   const [searchParams, setSearchParams] = useSearchParams();
   const currentEra = searchParams.get('era') ?? 'all';
   const query = searchParams.get('q') ?? '';
@@ -151,6 +153,8 @@ export function RacesPage() {
                   <img
                     alt={`${race.winner} ${race.year}`}
                     className="archive-preview-image"
+                    onClick={() => openLightbox([{ src: `/${race.image!.replace(/^images\//, 'images/')}`, alt: `${race.winner} ${race.year}`, title: `${race.year} Snowball Derby` }])}
+                    style={{ cursor: 'zoom-in' }}
                     src={`/${race.image.replace(/^images\//, 'images/')}`}
                   />
                 ) : null}
