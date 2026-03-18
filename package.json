@@ -1,0 +1,25 @@
+{
+  "name": "snowball-derby",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "seo:generate": "node --import ./tests/register-loader.mjs ./scripts/generate-seo.mjs",
+    "build": "npm run seo:generate && tsc -b && vite build",
+    "test": "node --import ./tests/register-loader.mjs --test tests/*.test.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
