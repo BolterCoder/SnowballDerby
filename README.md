@@ -4,7 +4,7 @@ A Vite + React + TypeScript archive for Snowball Derby history, driver profiles,
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 22.x
 - npm 10+
 
 ## Local Development
@@ -60,8 +60,9 @@ Before launch:
 1. Push this repo to GitHub, GitLab, or Bitbucket.
 2. In Vercel, create a new project and import the repository.
 3. Let Vercel detect the app as `Vite`.
-4. In the Vercel project settings, add the environment variable `VITE_SITE_URL` with your live domain, for example `https://snowballderbyarchive.com`.
-5. Deploy.
+4. Set the Vercel Node.js version to `22.x` or let [package.json](/Users/frankbolter/Desktop/snowball-derby/package.json) enforce it automatically.
+5. In the Vercel project settings, add the environment variable `VITE_SITE_URL` with your live domain, for example `https://snowballderbyarchive.com`.
+6. Deploy.
 
 This repo includes [vercel.json](/Users/frankbolter/Desktop/snowball-derby/vercel.json) so client-side routes such as `/races/2025` and `/drivers/rich-bickle` resolve correctly on refresh and direct visits.
 
