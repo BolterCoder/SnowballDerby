@@ -9,9 +9,7 @@
   "scripts": {
     "dev": "vite",
     "seo:generate": "node --import ./tests/register-loader.mjs ./scripts/generate-seo.mjs",
-    "build:typecheck": "tsc -b --force --pretty false",
-    "build:vite": "vite build --debug",
-    "build": "echo \"== SEO ==\" && npm run seo:generate && echo \"== TypeScript ==\" && npm run build:typecheck && echo \"== Vite ==\" && npm run build:vite",
+    "build": "npm run seo:generate && tsc -b && vite build",
     "test": "node --import ./tests/register-loader.mjs --test tests/*.test.ts",
     "preview": "vite preview"
   },
