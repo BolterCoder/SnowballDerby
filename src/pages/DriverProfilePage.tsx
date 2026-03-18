@@ -1,4 +1,5 @@
 import { ContinueExploring } from '../components/ContinueExploring';
+import { useLightbox } from '../components/Lightbox';
 import { Link, useParams } from 'react-router-dom';
 import { raceData } from '../data/races';
 import { formatDriverNote, getDriverBestFinish, getDriverBySlug, getDriverProfilePresentation, getDriverRaceEntries } from '../lib/drivers';
@@ -63,6 +64,7 @@ export function DriverProfilePage() {
     );
   }
 
+  const { open: openLightbox } = useLightbox();
   const raceEntries = getDriverRaceEntries(driver, raceData);
   const bestFinish = getDriverBestFinish(driver, raceData);
   const firstYear = driver.years.length ? Math.min(...driver.years) : null;
@@ -93,7 +95,7 @@ export function DriverProfilePage() {
         <section className="profile-hero-grid">
           <article className="detail-panel profile-lead-panel">
             {profile?.image ? (
-              <img alt={driver.name} className="feature-image" src={profile.image} />
+              <img alt={driver.name} className="feature-image" onClick={() => openLightbox([{ src: profile.image!, alt: driver.name, title: driver.name }])} src={profile.image} />
             ) : null}
             <p>{profile?.summary ?? driver.note}</p>
             {profile?.hometown ? (

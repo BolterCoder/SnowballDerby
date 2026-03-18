@@ -7,6 +7,7 @@
   --text: #e9eef7;
   --muted: #9eb0c7;
   --accent: #d73639;
+  --accent-wash: #d73639;
   --accent-2: #ddb56c;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   --radius: 18px;
@@ -23,6 +24,7 @@
   --text: #122034;
   --muted: #4f6077;
   --accent: #b72e30;
+  --accent-wash: #4a6178;
   --accent-2: #a77e2a;
   --shadow: 0 18px 44px rgba(17, 31, 51, 0.12);
 }

@@ -1,4 +1,5 @@
 import { ContinueExploring } from '../components/ContinueExploring';
+import { useLightbox } from '../components/Lightbox';
 import { Link, useParams } from 'react-router-dom';
 import { raceData } from '../data/races';
 import { getDriverPath } from '../lib/drivers';
@@ -50,6 +51,7 @@ function buildStoryParagraphs(story: string) {
 
 export function RaceDetailPage() {
   const { year } = useParams();
+  const { open: openLightbox } = useLightbox();
   const race = raceData.find((entry) => String(entry.year) === year);
   const metadata = race ? getRaceMetadata(race) : undefined;
   const mediaItems = race ? getRaceMediaItems(race) : [];
@@ -268,20 +270,39 @@ export function RaceDetailPage() {
               <h2 className="section-title">Race visuals and archive notes</h2>
             </div>
             <div className="media-grid">
-              {mediaItems.map((item) =>
-                item.type === 'image' ? (
-                  <article className="media-card media-card-image" key={`${race.year}-${item.title}`}>
-                    <img alt={item.alt} className="feature-image" src={item.src} />
-                    <p className="media-title">{item.title}</p>
-                    {item.caption ? <p className="media-caption">{item.caption}</p> : null}
-                  </article>
-                ) : (
-                  <article className="media-card" key={`${race.year}-${item.title}`}>
-                    <p className="eyebrow">Archive Note</p>
-                    <p className="media-title">{item.title}</p>
-                  </article>
-                ),
-              )}
+              {(() => {
+                const imageItems = mediaItems.filter((item) => item.type === 'image' && item.src);
+                const lightboxImages = imageItems.map((item) => ({
+                  src: item.src!,
+                  title: item.title,
+                  caption: item.caption,
+                  alt: item.alt,
+                }));
+                let imageIndex = 0;
+                return mediaItems.map((item) => {
+                  if (item.type === 'image') {
+                    const currentImageIndex = imageIndex++;
+                    return (
+                      <article className="media-card media-card-image" key={`${race.year}-${item.title}`}>
+                        <img
+                          alt={item.alt}
+                          className="feature-image"
+                          onClick={() => openLightbox(lightboxImages, currentImageIndex)}
+                          src={item.src}
+                        />
+                        <p className="media-title">{item.title}</p>
+                        {item.caption ? <p className="media-caption">{item.caption}</p> : null}
+                      </article>
+                    );
+                  }
+                  return (
+                    <article className="media-card" key={`${race.year}-${item.title}`}>
+                      <p className="eyebrow">Archive Note</p>
+                      <p className="media-title">{item.title}</p>
+                    </article>
+                  );
+                });
+              })()}
             </div>
           </section>
         ) : null}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLightbox } from '../components/Lightbox';
 import { originStoryBeats, pensacolaStoryBeats } from '../content/history';
 import { quotes } from '../content/quotes';
 import { driverData } from '../data/drivers';
@@ -33,6 +34,7 @@ const homeFaqs = [
 ] as const;
 
 export function HomePage() {
+  const { open: openLightbox } = useLightbox();
   const archiveItems = sortRacesDescending(raceData).slice(0, 12).map((race) => ({
     name: `${race.year} Snowball Derby won by ${race.winner}`,
     path: `/races/${race.year}`,
@@ -173,6 +175,7 @@ export function HomePage() {
               <img
                 alt="Grandstand view of the Snowball Derby"
                 className="feature-image"
+                onClick={() => openLightbox([{ src: '/images/Turn 1 Grandstand Snowball Derby.jpg', alt: 'Grandstand view of the Snowball Derby' }])}
                 src="/images/Turn 1 Grandstand Snowball Derby.jpg"
               />
             </article>

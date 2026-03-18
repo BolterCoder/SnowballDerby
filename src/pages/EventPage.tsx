@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ContinueExploring } from '../components/ContinueExploring';
+import { useLightbox } from '../components/Lightbox';
 import { nascarCrossovers, supportDivisions, supportRaceMoments, trackGallery, trackHistoryMoments, trackStats } from '../content/event';
 import { getDriverPath } from '../lib/drivers';
 import { createWebPageSchema, usePageMetadata } from '../lib/seo';
 
 export function EventPage() {
+  const { open: openLightbox } = useLightbox();
   usePageMetadata({
     title: 'Event',
     description:
@@ -61,6 +63,7 @@ export function EventPage() {
             <img
               alt="Packed grandstands at the Snowball Derby"
               className="feature-image"
+              onClick={() => openLightbox([{ src: '/images/Turn 1 Grandstand Snowball Derby.jpg', alt: 'Packed grandstands at the Snowball Derby' }])}
               src="/images/Turn 1 Grandstand Snowball Derby.jpg"
             />
           </article>
@@ -94,13 +97,26 @@ export function EventPage() {
             <h2 className="section-title">The venue should feel visible, not implied.</h2>
           </div>
           <div className="media-grid">
-            {trackGallery.map((item) => (
-              <article className="media-card" key={item.title}>
-                <img alt={item.alt} className="feature-image" src={item.image} />
-                <h3 className="media-title">{item.title}</h3>
-                <p className="media-caption">{item.caption}</p>
-              </article>
-            ))}
+            {(() => {
+              const lightboxImages = trackGallery.map((item) => ({
+                src: item.image,
+                title: item.title,
+                caption: item.caption,
+                alt: item.alt,
+              }));
+              return trackGallery.map((item, idx) => (
+                <article className="media-card" key={item.title}>
+                  <img
+                    alt={item.alt}
+                    className="feature-image"
+                    onClick={() => openLightbox(lightboxImages, idx)}
+                    src={item.image}
+                  />
+                  <h3 className="media-title">{item.title}</h3>
+                  <p className="media-caption">{item.caption}</p>
+                </article>
+              ));
+            })()}
           </div>
         </section>
 

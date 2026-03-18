@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ContinueExploring } from '../components/ContinueExploring';
+import { useLightbox } from '../components/Lightbox';
 import { legends, localHeroes, pensacolaLegacyMoments } from '../content/legends';
 import { getDriverPath } from '../lib/drivers';
 import { createWebPageSchema, usePageMetadata } from '../lib/seo';
 
 export function LegendsPage() {
+  const { open: openLightbox } = useLightbox();
   usePageMetadata({
     title: 'Legends',
     description:
@@ -39,7 +41,7 @@ export function LegendsPage() {
         <div className="card-grid">
           {legends.map((legend) => (
             <article className="profile-card" key={legend.name}>
-              {legend.image ? <img alt={legend.name} className="profile-image" src={legend.image} /> : null}
+              {legend.image ? <img alt={legend.name} className="profile-image" onClick={() => openLightbox([{ src: legend.image!, alt: legend.name, title: legend.name }])} src={legend.image} /> : null}
               {legend.badge ? <p className="eyebrow">{legend.badge}</p> : null}
               <h2>{legend.name}</h2>
               {legend.stats?.length ? (
@@ -70,7 +72,7 @@ export function LegendsPage() {
         <div className="feature-grid">
           {localHeroes.map((hero) => (
             <article className="profile-card" key={hero.name}>
-              {hero.image ? <img alt={hero.name} className="profile-image" src={hero.image} /> : null}
+              {hero.image ? <img alt={hero.name} className="profile-image" onClick={() => openLightbox([{ src: hero.image!, alt: hero.name, title: hero.name }])} src={hero.image} /> : null}
               {hero.badge ? <p className="eyebrow">{hero.badge}</p> : null}
               <h3>{hero.name}</h3>
               {hero.stats?.length ? (

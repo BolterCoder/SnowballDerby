@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
+import { LightboxProvider } from '../components/Lightbox';
 import { createOrganizationSchema, createWebSiteSchema, useStructuredData } from '../lib/seo';
 
 const navigation = [
@@ -42,6 +43,7 @@ export function AppShell() {
     )?.label ?? 'Archive';
 
   return (
+    <LightboxProvider>
     <div className="app-shell">
       <header className="site-header">
         <div className="container header-row">
@@ -124,5 +126,6 @@ export function AppShell() {
         </div>
       </footer>
     </div>
+    </LightboxProvider>
   );
 }
